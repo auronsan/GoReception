@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_agreement"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ahsanul.goreception.AgreementActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <Button
+        android:text="Decline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Decline"
+        android:background="@android:color/holo_red_light"
+        android:textColor="@android:color/white"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+
+    <Button
+        android:text="Next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/Next1"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/white"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/my_toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/my_toolbar"
+                android:layout_alignRight="@+id/Decline"
+                android:layout_alignEnd="@+id/Decline"
+                android:layout_marginTop="22dp"
+                android:id="@+id/AgreementText" />
+
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/sign_ico"
+                android:id="@+id/signbutton"
+                android:scaleType="fitXY" />
+
+
+            <View
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:srcCompat="@android:color/background_light"
+                android:layout_below="@id/AgreementText"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="92dp"
+                android:id="@+id/SignView"
+                />
+
+            <TextView
+                android:text="_________________________________"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView5" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:text="Please sign the agreement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:textSize="18sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"/>
+
+
+</RelativeLayout>

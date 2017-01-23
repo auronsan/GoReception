@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_home_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ahsanul.goreception.HomeScreen"
+    android:background="?android:attr/windowBackground">
+
+    <ahsanul.goreception.ViewPager.CustomViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        />
+
+    <ImageView android:id="@+id/LogoImage" android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/splash"
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+         />
+    <TextView
+        android:text="desc"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="113dp"
+        android:id="@+id/Desc"
+        android:layout_width="300dp"
+        android:layout_alignTop="@+id/LogoImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="24sp" />
+    <Button
+        android:text="Sign In"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="113dp"
+        android:id="@+id/SignIn"
+        android:clickable="true"
+        android:background="@color/bg_screen3"
+        android:layout_width="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClick"
+        android:elevation="0dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:text="Sign Out"
+            android:layout_height="match_parent"
+            android:id="@+id/SignOut"
+            android:clickable="true"
+            android:background="@color/bg_screen3"
+            android:layout_width="150dp"
+            android:onClick="onClick"
+            android:drawableLeft="@drawable/noun_log_out"
+            android:layout_alignParentBottom="true"
+            android:scaleType="centerCrop" />
+        <Button
+            android:text="Check-in/out with QR Code"
+            android:layout_height="match_parent"
+            android:id="@+id/Checkin"
+            android:onClick="onClick"
+            android:clickable="true"
+            android:background="@color/bg_screen3"
+            android:layout_width="150dp"
+            android:layout_alignLeft="@+id/SignOut"
+            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
+            android:scaleType="centerCrop"
+            android:drawableLeft="@drawable/noun_qr_code"/>
+
+        <Button
+            android:text="Delivery"
+            android:layout_height="wrap_content"
+            android:id="@+id/Delivery"
+            android:onClick="onClick"
+            android:clickable="true"
+            android:background="@color/bg_screen3"
+            android:layout_alignLeft="@+id/Checkin"
+            android:layout_width="100dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
+            android:enabled="false"
+            android:drawableLeft="@drawable/noun_delivery"/>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="GoReception"
+            android:layout_marginLeft="100dp"
+            android:layout_marginStart="100dp"
+            android:textColor="@android:color/darker_gray"
+            android:textAlignment="center"
+            android:textStyle="normal|bold"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>
