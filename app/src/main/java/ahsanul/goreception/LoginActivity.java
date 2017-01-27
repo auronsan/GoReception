@@ -18,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -75,10 +76,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     Context ctx;
     boolean successlogin=false;
+    PrefManager prefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        prefManager = new PrefManager(this);
+        Log.d("test",prefManager.getToken());
+        if (prefManager.getToken().equals("DEFAULT")) {
+
+        }else{
+            finish();
+            SecurityToken = prefManager.getToken();
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            intent.putExtra("SToken", SecurityToken);
+            startActivity(intent);
+            Toast.makeText(getBaseContext(), "Welcome to GoReception Android!"+SecurityToken,Toast.LENGTH_LONG).show();
+        }
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(email);
         populateAutoComplete();
@@ -323,6 +340,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     e.getMessage();
                 }
                 if(SecurityToken!=null){
+                    prefManager.setToken(SecurityToken);
                     finish();
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     intent.putExtra("SToken", SecurityToken);

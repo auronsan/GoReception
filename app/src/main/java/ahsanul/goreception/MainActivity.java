@@ -2,7 +2,6 @@ package ahsanul.goreception;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -46,42 +45,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mProgressView = findViewById(R.id.progressBarMain);
         mProgressView.setVisibility(View.VISIBLE);
-        listTerminal();
         listView = (ListView) findViewById(R.id.ListView5);
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        listTerminal();
 
-                // Do something after 5s = 5000ms
 
-                mProgressView.setVisibility(View.GONE);
-                ArrayAdapter<String> adapter=new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1,android.R.id.text1,TerminalList);
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view,
-                                            int position, long id) {
-                        int itemPosition     = position;
-                        String  itemValue    = (String) listView.getItemAtPosition(position);
-                        finish();
-                        Toast.makeText(getBaseContext(), "Welcome to "+itemValue,Toast.LENGTH_LONG).show();
-
-                        Intent intent = new Intent(getBaseContext(), TerminalActivity.class);
-                        try {
-                            String JsonTerminal = terminal1.getJSONObject(itemPosition).toString();
-                            intent.putExtra("JsonT", JsonTerminal);
-                            intent.putExtra("SToken", Stoken);
-                            intent.putExtra("User_id",resultjson.getString("user_id"));
-
-                        }catch(Exception e){
-                            Log.d("error!",e.getMessage());
-                        }
-                        startActivity(intent);
-                    }
-                });
-            }
-        }, 5000);
     }
 
 public void listTerminal(){
@@ -104,6 +71,7 @@ public void listTerminal(){
                 for(int i=0;i<lengthTerminal;i++){
                     TerminalList.add(terminal1.getJSONObject(i).getString("name"));
                 }
+                toContinue();
 
 
             }catch(Exception e){e.getMessage();}
@@ -119,5 +87,32 @@ public void listTerminal(){
     requestQueue.add(jsObjRequest);
 
 }
+    public void toContinue(){
+        mProgressView.setVisibility(View.GONE);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1,android.R.id.text1,TerminalList);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                int itemPosition     = position;
+                String  itemValue    = (String) listView.getItemAtPosition(position);
+                finish();
+                Toast.makeText(getBaseContext(), "Welcome to "+itemValue,Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(getBaseContext(), TerminalActivity.class);
+                try {
+                    String JsonTerminal = terminal1.getJSONObject(itemPosition).toString();
+                    intent.putExtra("JsonT", JsonTerminal);
+                    intent.putExtra("SToken", Stoken);
+                    intent.putExtra("User_id",resultjson.getString("user_id"));
+
+                }catch(Exception e){
+                    Log.d("error!",e.getMessage());
+                }
+                startActivity(intent);
+            }
+        });
+    }
      }
 

@@ -3,7 +3,6 @@ package ahsanul.goreception;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -80,37 +79,7 @@ public class SearchHostActivity extends AppCompatActivity {
                             }
                         }
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, android.R.id.text1, HostListName);
-
-
-                        listView.setAdapter(adapter);
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view,
-                                                    int position, long id) {
-                                itemPosition = position;
-                                String itemValue = (String) listView.getItemAtPosition(position);
-                                view2 = view;
-                                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.MyAlertDialogStyle);
-                                builder.setTitle("SearchHostActivity Checkin :" + HostListName.get(itemPosition));
-                                builder.setMessage("Are you really want to checkin?");
-                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        try {
-                                            checkin("dummyvisitor", HostListID.get(itemPosition));
-                                            Log.d("tes33", resultjson.toString());
-                                            finish();
-                                        } catch (Exception e) {
-                                            Toast.makeText(getBaseContext(), "Error! " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                });
-                                builder.setNegativeButton("Cancel", null);
-                                builder.show();
-                                ;
-                            }
-                        });
-
+                   toContinue();
                         return true;
                     }
 
@@ -120,49 +89,6 @@ public class SearchHostActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                temp = HostListName;
-                tempID = HostListID;
-                mProgressView.setVisibility(View.GONE);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, android.R.id.text1, HostListName);
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view,
-                                            int position, long id) {
-                        itemPosition = position;
-                        String itemValue = (String) listView.getItemAtPosition(position);
-                        view2 = view;
-                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.MyAlertDialogStyle);
-                        builder.setTitle("SearchHostActivity Checkin : " + HostListName.get(itemPosition));
-                        builder.setMessage("Are you really want to checkin?");
-
-                        RequestFuture<String> future = RequestFuture.newFuture();
-                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                try {
-                                    checkin("dummyvisitor", HostListID.get(itemPosition));
-                                    Log.d("tes33", resultjson.toString());
-                                    finish();
-
-                                } catch (Exception e) {
-                                    Toast.makeText(getBaseContext(), "Error! " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
-                        builder.setNegativeButton("Cancel", null);
-                        builder.show();
-                        ;
-                    }
-                });
-
-            }
-        }, 5000);
-
 
     }
 
@@ -183,10 +109,10 @@ public void listHost(){
                     resultjson = userCheck.getJSONObject(i);
                     HostListID.add(resultjson.getString("id"));
                     HostListName.add(resultjson.getString("first_name"));
-                    Log.d("goti", HostListName.get(i));
                 }
                 temp = HostListName;
                 tempID = HostListID;
+                toContinue();
             } catch (Exception e) {
                 Log.d("goti", e.getMessage());
                 mProgressView.setVisibility(View.GONE);
@@ -206,6 +132,7 @@ public void listHost(){
     requestQueue.add(jsObjRequest);
 }
     public void checkin(String visitors, String meetings) {
+
         String JSON_URL = "https://beta.goreception.co/apiv3/officeCheckin";
         Map<String, String> params = new HashMap<String, String>();
         String visitorsdum = "[{\"full_name\":\"" + getIntent().getStringExtra("Fullname") + "\",\"";
@@ -215,32 +142,23 @@ public void listHost(){
             for (int i = 0; i < lengthField; i++) {
                 if (i == 1) {
                     visitorsdum += "\"mobile\":\"" + getIntent().getStringExtra(resultjson1.getJSONObject(i).getString("name")) + "\",";
-                    Log.d("walah host", resultjson1.getJSONObject(i).getString("name") + " " + getIntent().getStringExtra(resultjson1.getJSONObject(i).getString("name")));
                 } else if (i == lengthField - 1) {
-                    //visitorsdum +="\""+ resultjson1.getJSONObject(i).getString("name").toLowerCase()+"\":\""+getIntent().getStringExtra(resultjson1.getJSONObject(i).getString("name"))+"\"";
-                    // Log.d("walah host",resultjson1.getJSONObject(i).getString("name")+" "+getIntent().getStringExtra(resultjson1.getJSONObject(i).getString("name")));
                 } else {
                     visitorsdum += "\"" + resultjson1.getJSONObject(i).getString("name").toLowerCase() + "\":\"" + getIntent().getStringExtra(resultjson1.getJSONObject(i).getString("name")) + "\",";
-                    Log.d("walah host", resultjson1.getJSONObject(i).getString("name") + " " + getIntent().getStringExtra(resultjson1.getJSONObject(i).getString("name")));
                 }
             }
         } catch (Exception e) {
             Log.d("walah", e.getMessage());
         }
         visitorsdum += "\"custom_fields\":{\"cus\":0, \"cus1\":1}}]";
-        Log.d("walah dadi", visitorsdum);
-        //String visitorsdum1 = "[{\"email\":\"auronsanjr@gmail.com\",\"full_name\":\""+getIntent().getStringExtra("Fullname")+"\",\"mobile\":\"+841204439008\",\"company\":\"SPS\",\"custom_fields\":{\"cus\":0, \"cus1\":1}}]";
         visitorsdum = "[{\"email\":\"" + getIntent().getStringExtra("Email") + "\",\"full_name\":\"" + getIntent().getStringExtra("Fullname") + "\",\"mobile\":\"" + getIntent().getStringExtra("Phone") + "\",\"company\":\"" + getIntent().getStringExtra("Company") + "\",\"custom_fields\":{\"cus\":0, \"cus1\":1}}]";
-        Log.d("walah dadi2", visitorsdum);
         params.put("business_id", BusinessID);
         params.put("meetings", meetings);
         params.put("securityToken", SToken);
         params.put("terminal_id", BusinessID);
         params.put("type", "signin");
         params.put("visitors", visitorsdum);
-        Log.d("goti", SToken + " " + BusinessID);
         JSONObject abc = new JSONObject(params);
-        Log.d("goti", abc.toString());
         success = false;
         RequestQueue requestQueue = Volley.newRequestQueue(getBaseContext());
         VolleyRequest jsObjRequest = new VolleyRequest(Request.Method.POST, JSON_URL, params, new Response.Listener<JSONObject>() {
@@ -255,6 +173,7 @@ public void listHost(){
                     } else {
                         Toast.makeText(getBaseContext(), "Success checkin for " + getIntent().getStringExtra("Fullname"), Toast.LENGTH_LONG).show();
                         success = true;
+
                     }
                 } catch (Exception e) {
                     Log.d("goti", e.getMessage());
@@ -273,6 +192,41 @@ public void listHost(){
         });
         requestQueue.add(jsObjRequest);
 
+
+    }
+    public void toContinue(){
+        mProgressView.setVisibility(View.GONE);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, android.R.id.text1, HostListName);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                itemPosition = position;
+                String itemValue = (String) listView.getItemAtPosition(position);
+                view2 = view;
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.MyAlertDialogStyle);
+                builder.setTitle("SearchHostActivity Checkin : " + HostListName.get(itemPosition));
+                builder.setMessage("Are you really want to checkin?");
+
+                RequestFuture<String> future = RequestFuture.newFuture();
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            checkin("dummyvisitor", HostListID.get(itemPosition));
+                            Log.d("tes33", resultjson.toString());
+                            finish();
+
+                        } catch (Exception e) {
+                            Toast.makeText(getBaseContext(), "Error! " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+                builder.setNegativeButton("Cancel", null);
+                builder.show();
+                ;
+            }
+        });
 
     }
 }

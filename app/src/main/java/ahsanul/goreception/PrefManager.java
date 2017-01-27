@@ -31,6 +31,14 @@ public class PrefManager {
         editor.commit();
     }
 
+    public void setToken(String stoken) {
+        editor.putString("SToken", stoken);
+        editor.commit();
+    }
+    public String getToken() {
+
+        return pref.getString("SToken","DEFAULT");
+    }
     public boolean isFirstTimeLaunch() {
         return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }

@@ -4,14 +4,12 @@
     android:id="@+id/activity_home_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ahsanul.goreception.HomeScreen"
+    tools:context="ahsanul.goreception.TerminalActivity"
     android:background="?android:attr/windowBackground">
-
-    <ahsanul.goreception.ViewPager.CustomViewPager
-        android:id="@+id/view_pager"
+    <com.daimajia.slider.library.SliderLayout
+        android:id="@+id/slider"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         />
 
     <ImageView android:id="@+id/LogoImage" android:layout_width="100dp"
