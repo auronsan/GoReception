@@ -115,12 +115,15 @@ public class AgreementActivity extends AppCompatActivity{
         private Path circlePath;
 
         public DrawingView(Context c) {
+
             super(c);
             context=c;
             mPath = new Path();
             mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+            mBitmapPaint.setTextSize(10);
             circlePaint = new Paint();
             circlePath = new Path();
+
             circlePaint.setAntiAlias(true);
             circlePaint.setColor(Color.BLUE);
             circlePaint.setStyle(Paint.Style.STROKE);
@@ -182,6 +185,8 @@ public class AgreementActivity extends AppCompatActivity{
             float x = event.getX();
             float y = event.getY();
 
+            Log.d("test",x+" "+y);
+if(y >getHeight()/2){
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     touch_start(x, y);
@@ -196,6 +201,11 @@ public class AgreementActivity extends AppCompatActivity{
                     invalidate();
                     break;
             }
+}else{
+    touch_start(x, y);
+
+    invalidate();
+}
             return true;
         }
     }
